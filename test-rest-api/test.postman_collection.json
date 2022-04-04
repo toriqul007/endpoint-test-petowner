@@ -540,7 +540,7 @@
 							"// Before we can compare reorder the response (that is currentl",
 							"// ordered by descending id - so that is order by ascending id)",
 							"// The simplest to do this is to simply reverse the order",
-							"// response = response.reverse();",
+							"response = response.reverse();",
 							"",
 							"// Test that the list of petOwners we get from the REST api ar",
 							"// identical to our mockData",
