@@ -8,7 +8,7 @@ const { TestWatcher} = require ('jest');
 
 describe('A test suite', () => {
     test('A fake test', () => {
-        expect(2).toBe(3); //failing on purpose
+        expect(3).toBe(3); //failing on purpose
 
     }); 
 });
