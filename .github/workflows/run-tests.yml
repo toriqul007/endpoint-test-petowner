@@ -1,5 +1,8 @@
 name: Run tests
 
+# Run this workflow when we dev or main changes 
+# because of a push or is about the be changed
+# by a pull request
 on:
   push:
     branches: [dev, main]
@@ -8,24 +11,37 @@ on:
 
 jobs:
 
-  api-tests:
+  api-and-unit-tests:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # On an ubuntu server
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [14.x] # with Node.js 14.x
 
     steps:
+      # install node
     - uses: actions/checkout@v2
+      # checkout repo
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      # install npm modules ( using ci, instead of i)
     - run: npm ci
+    # run the npm build command ( not used in our project)
     - run: npm run build --if-present
+    # install pm2
     - run: npm install -g pm2
+    # run our Node.js based server/backend/REST-api using pme
     - run: pm2 start index.js
+    # install Newman
     - run: npm install -g newman
+    # run our test collection using Newman
     - run: newman run test-rest-api/test.postman_collection.json
+     # run jest unit test
+    - run: npm test
+
+
+  
